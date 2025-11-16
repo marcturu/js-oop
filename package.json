@@ -1,0 +1,13 @@
+{
+  "name": "pec-2",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "react-scripts test"
+  },
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/user-event": "^14.4.0",
+    "react-scripts": "5.0.1"
+  }
+}
