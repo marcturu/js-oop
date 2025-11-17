@@ -10,24 +10,25 @@
 export function generatePassword(options) {
 
     // El parámetro options debe ser un objeto válido (no null).
-    if (typeof options != "object" || options == null) throw new Error("Options must be an object");
+    if (typeof options !== "object" || options === null) throw new Error("Options must be an object"); // Se utiliza comparación !== y === en vez de != y ==.
 
     // Objeto con las siguientes propiedades opcionales (todas ellas deben tener valor por defecto = 1).
     const counts = {
-        uppercase: options.uppercase != undefined ? options.uppercase : 1,
-        lowercase: options.lowercase != undefined ? options.lowercase : 1,
-        numbers: options.numbers != undefined ? options.numbers : 1,
-        symbols: options.symbols != undefined ? options.symbols : 1
+        uppercase: options.uppercase !== undefined ? options.uppercase : 1,
+        lowercase: options.lowercase !== undefined ? options.lowercase : 1,
+        numbers: options.numbers !== undefined ? options.numbers : 1,
+        symbols: options.symbols !== undefined ? options.symbols : 1
     };
 
     // Todos los contadores deben ser números no negativos.
     const keys = ["uppercase", "lowercase", "numbers", "symbols"];
 
-    for (let i = 0; i < keys.length; i++) {
+    const n = keys.length; // Declaramos n fuera del bucle para evitar calcular keys.length en cada iteración.
+    for (let i = 0; i < n; i++) {
         const key = keys[i]; //La "palabra" de counts.
         const value = counts[key]; //El valor obtenido a través de la palabra.
 
-        if (typeof value != "number" || value < 0) throw new Error(`${key.charAt(0).toUpperCase() + key.slice(1)} count must be a non-negative number`); //Passar el primer carácter de uppercase a mayúscula
+        if (typeof value !== "number" || value < 0) throw new Error(`${key.charAt(0).toUpperCase() + key.slice(1)} count must be a non-negative number`); //Passar el primer carácter de uppercase a mayúscula
     }
 
     // La longitud debe estar entre 4 y 128 caracteres.
@@ -38,7 +39,7 @@ export function generatePassword(options) {
     const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     const lower = "abcdefghijklmnopqrstuvwxyz";
     const nums = "0123456789";
-    const sym = "!@#$%^&*()_+-=[]{}|;:,.<>?"
+    const sym = "!@#$%^&*()_+-=[]{}|;:,.<>?";
 
     /** 
      * Genera una contraseña aleatoria para un único tipo de propiedad y su contador.
@@ -49,8 +50,9 @@ export function generatePassword(options) {
     */
     function randomTypeFormer(type, count) {
         let res = "";
+        const n = type.length; 
         for (let i = 0; i < count; i++) {
-            const pos = Math.floor(Math.random() * type.length);
+            const pos = Math.floor(Math.random() * n);
             res += type.charAt(pos);
         }
         return res;
@@ -63,8 +65,9 @@ export function generatePassword(options) {
     let array = password.split("");
 
     // Mezcla aleatoriamente el "password" de carácteres individuales.
-    for (let i = 0; i < array.length; i++) {
-        let j = Math.floor(Math.random() * array.length);
+    const m = array.length;
+    for (let i = 0; i < m; i++) {
+        let j = Math.floor(Math.random() * m);
         let aux = array[i];
         array[i] = array[j];
         array[j] = aux;
@@ -76,71 +79,83 @@ export function generatePassword(options) {
 
 
 /** 
- * Genera una espiral formada por los caracteres █ (bloque sólido) y espacios en blanco.
+ * Genera una espiral formada por los caracteres "█" y " ".
  * 
- * @param {number} n Número de "vueltas" de la espiral.
- * @returns {[string]} Array de strings, donde cada string representa una fila de la espiral.
+ * @param {number} n Número de vueltas de la espiral.
+ * @returns {string[]} Array de strings, donde cada string representa una fila de la espiral.
 */
 // --------------------------------------------------------------------------------
 // EXERCISE 2
 // --------------------------------------------------------------------------------
 export function generateSpiral(n) {
 
-    let size = 2 * n + 1;
-    let array = [];
+    const size = 2 * n + 1;
+    const matrix = [];
 
-    // Primero de todo, creamos al matriz resultado vacía a partir del tamaño (para después solamente rellenar los █).
+    // Creamos la matriz resultado vacía a partir del tamaño (para después solamente rellenar los █).
     for (let i = 0; i < size; i++) {
-        array[i] = [];
+        matrix[i] = [];
         for (let j = 0; j < size; j++) {
-            array[i][j] = " ";
+            matrix[i][j] = " ";
         }
     }
 
-    // Recorremos las vueltas que da la espiral (formando 1 cuadrado por vuelta con sus 4 lados).
-    for (let lap = 0; lap < n; lap++) {
-        let start = lap * 2;
-        let end = size - 1 - (lap * 2);
+    // Arrays que representan el desplazamiento de row y column para las 4 direcciones posibles.
+    // (0, 1) Derecha
+    // (1, 0) Abajo
+    // (0, -1) Izquierda
+    // (-1, 0) Arriba
+    const dRow = [0, 1, 0, -1];
+    const dColumn = [1, 0, -1, 0];
 
-        if (start > end) break;
-
-        // Lado superior (dibujamos de izquierda a derecha, es decir, manteniendo la row (start) pero editando la column (j)).
-        if (lap === 0) {
-            for (let j = start; j <= end; j++) {
-                array[start][j] = "█";
-            }
-        } else {
-            for (let j = 0; j <= end; j++) {
-                if (array[start][j] === " ") {
-                    array[start][j] = "█"
-                }
-            }
-        }
-        
-        // Lado derecho (dibujamos de arriba a bajo, es decir, manteniendo la column (end) pero editando la row (i)).
-        for (let i = start + 1; i <= end; i++) {
-            array[i][end] = "█";
-        }
-
-        // Lado inferior (dibujamos de derecha a izquierda, es decir, manteniendo la row (end) pero editando la column (j)).
-        for (let j = end; j >= start; j--) {
-            array[end][j] = "█";
-        }
-
-        // Lado izquierdo (dibujamos de abajo a arriba, es decir, manteniendo la column (start) pero editando la row (i)).
-        // De end - 1 hasta start + 2 para dejar el hueco de la espiral de cada vuelta
-        for (let i = end - 1; i >= start; i--) {
-            if (i != start + 1) {
-                array[i][start] = "█";
-            }
-        }
-        
+    // Devuelve true si la celda (row, column) está dentro del tablero.
+    function inBounds(row, column) {
+        return row >= 0 && row < size && column >= 0 && column < size;
     }
 
-    let res = [];
-    for (let i = 0; i < size; i++) res[i] = array[i].join("");
-    
-    return res;
+    // Garantiza el separador de " " entre vueltas.
+    function isValidStep(row, column, prevRow, prevColumn) {
+        if (!inBounds(row, column) || matrix[row][column] !== " ") return false; // Fuera del tablero o ya hay un "█" dibujado..
+
+        const neighbors = [ [row - 1, column], [row + 1, column], [row, column - 1], [row, column + 1] ]; // Básicamente, los vecinos de la celda (row, column). Las diagonales, no.
+
+        for (const [nRow, nColumn] of neighbors) {
+            if (!inBounds(nRow, nColumn)) continue; // Si el vecino está fuera del tablero, continuamos.
+            if (nRow === prevRow && nColumn === prevColumn) continue; // Si el vecino es una celda previa, continuamos.
+            if (matrix[nRow][nColumn] === "█") return false; // Si el vecino ya está dibujado, no queremos que sea valido porque entonces se tocarían dos █.
+        }
+
+        return true; // Está permitido dibujar en esa celda.
+    }
+
+    let row = 0, column = 0; // Row y column actuales.
+    let dir = 0; // Es derecha (primer movimiento).
+
+    matrix[row][column] = "█";
+
+    let moved;
+    // Con el do queremos movernos en la espiral hasta que no se pueda. Entonces, será false y no se cumplirá el bucle.
+    do {
+        moved = false; // En esta iteración no nos hemos movido aún.
+
+        for (let attempt = 0; attempt < 4; attempt++) { // Intenta probar en las 4 direcciones posibles.
+            const nextRow = row + dRow[dir]; // Row de la siguiente celda (con dirección dir).
+            const nextColumn = column + dColumn[dir]; // Column de la siguiente celda (con dirección dir).
+
+            // Se comprueba con la nueva celda potencial y la celda previa.
+            if (isValidStep(nextRow, nextColumn, row, column)) {
+                row = nextRow; // Actualiza la row actual con la nueva.
+                column = nextColumn; // Actualiza la column actual con la nueva. 
+                matrix[row][column] = "█"; // Pinta esta nueva celda.
+                moved = true; // Nos hemos movido.
+                break; // Sale del for porque ya ha encontrado la dirección correcta de movimiento.
+            }
+            dir = (dir + 1) % 4; // Si esa step no era valida, gira en la nueva dirección (con orden derecha, abajo, izquierda, arriba) para utilizar dRow y dColumn.
+        }
+
+    } while (moved); // Si cuando acabamos el bucle for y no se ha pintado en ninguna dirección (no se ha establecido moved = true), significa que no hay movimientos disponibles y debemos salir.
+
+    return matrix.map(row => row.join("")); // Como matrix es un array de arrays de caracteres, debemos convertirlo a un array de strings.
 
 }
 
@@ -149,7 +164,7 @@ export function generateSpiral(n) {
 // --------------------------------------------------------------------------------
 export class LibraryItem {
     constructor(id, title) {
-        if (this.constructor == LibraryItem) throw new Error("Cannot instantiate abstract class LibraryItem directly"); // Si se intenta instanciar directamente.
+        if (this.constructor === LibraryItem) throw new Error("Cannot instantiate abstract class LibraryItem directly"); // Si se intenta instanciar directamente la clase abstracta.
         this.id = id;
         this.title = title;
     }
@@ -167,23 +182,25 @@ export class Book extends LibraryItem {
     }
 
     addUnit(unitId, condition) {
-        let exists = this.getUnitById(unitId);
+        const exists = this.getUnitById(unitId);
         if (exists) throw new Error(`Unit with id ${unitId} already exists`); // Ya existe una copia con el mismo id.
         
-        let bookUnit = new BookUnit(unitId, this, condition);
+        const bookUnit = new BookUnit(unitId, this, condition);
         this.units.push(bookUnit);
         return bookUnit; // Devuelve la nueva instancia.
     }
 
     removeUnit(unitId) {
-        let unit = this.getUnitById(unitId);
+        const unit = this.getUnitById(unitId);
         if (!unit) throw new Error("Unit not found"); // No existe.
-
-        if (unit.status != "available") throw new Error("Cannot remove unit that is not available"); // La copia no está disponible.
+        if (unit.status !== "available") throw new Error("Cannot remove unit that is not available"); // La copia no está disponible.
 
         // Elimina una copia por su id.
-        let unitsAux = [];
-        for (let i = 0; i < this.units.length; i++) if (this.units[i].unitId !== unitId) unitsAux.push(this.units[i]);
+        const unitsAux = [];
+        const n = this.units.length; 
+        for (let i = 0; i < n; i++) {
+            if (this.units[i].unitId !== unitId) unitsAux.push(this.units[i]);
+        }
         this.units = unitsAux;
 
         return unit; // Devuelve la unidad eliminada.
@@ -196,26 +213,36 @@ export class Book extends LibraryItem {
     // Se podría hacer con .filter.
     get availableUnits() {
         let num = 0;
-        for (let i = 0; i < this.units.length; ++i) if (this.units[i].status === "available") num++;
+        const n = this.units.length;
+        for (let i = 0; i < n; i++) {
+            if (this.units[i].status === "available") num++;
+        }
         return num;
     }
 
     // Se podría hacer con .filter.
     get borrowedUnits() {
         let num = 0;
-        for (let i = 0; i < this.units.length; ++i) if (this.units[i].status === "borrowed") num++;
+        const n = this.units.length;
+        for (let i = 0; i < n; i++) {
+            if (this.units[i].status === "borrowed") num++;
+        }
         return num;
     }
 
     // Se podría hacer con .filter.
     get maintenanceUnits() {
         let num = 0;
-        for (let i = 0; i < this.units.length; ++i) if (this.units[i].status === "maintenance") num++;
+        const n = this.units.length;
+        for (let i = 0; i < n; i++) {
+            if (this.units[i].status === "maintenance") num++;
+        }
         return num;
     }
 
     getAvailableUnit() {
-        for(let i = 0; i < this.units.length; i++) {
+        const n = this.units.length;
+        for(let i = 0; i < n; i++) {
             if (this.units[i].status === "available") return this.units[i]; // Devuelve la primera copia disponible.
         }
         return undefined; //No hay ninguna copia con status "available".
@@ -223,7 +250,8 @@ export class Book extends LibraryItem {
 
     // Se podría hacer con .filter.
     getUnitById(unitId) {
-        for(let i = 0; i < this.units.length; i++) {
+        const n = this.units.length;
+        for(let i = 0; i < n; i++) {
             if (this.units[i].unitId === unitId) return this.units[i];
         }
         return undefined; //No hay ninguna copia con la unitId pasada por parámetro.
@@ -244,6 +272,17 @@ export class BookUnit extends LibraryItem {
         this.status = "available";
     }
 
+    /** 
+     * Actualiza el estado de una BookUnit basándose en su condición.
+     * Si esta es "good" o "fair", el estado pasa a "available". En caso contrario, pasa a "maintenance".
+     * Esta función protegida general nos permite evitar utilizar el mismo código en muchos sitios, ya que se puede reutilizar en returnUnit, maintenanceUnit y updateConditionAndStatus.
+     * 
+     * @returns {void}
+    */
+    _updateStatusByCondition() {
+        this.status = this.isConditionGoodOrFair() ? "available" : "maintenance"; // El estado pasa a available si la condición es buena (good o fair). En caso contrario, pasa a maintenance.
+    }
+
     isAvailable() {
         return this.status === "available";
     }
@@ -257,41 +296,28 @@ export class BookUnit extends LibraryItem {
     }
 
     borrowUnit() {
-        try {
-            if (!this.isAvailableForBorrow()) throw "error"; // No se cumple que: la copia esté disponible y además se encuentre en condiciones aceptables.
-            this.status = "borrowed";
-
-        } catch (e) {
-            throw new Error(`Unit ${this.unitId} is not available for borrow (Status: ${this.status}. Condition: ${this.condition})`);
-        }
+        if (!this.isAvailableForBorrow()) throw new Error(`Unit ${this.unitId} is not available for borrow (Status: ${this.status}. Condition: ${this.condition})`); // No se cumple que: la copia esté disponible y además se encuentre en condiciones aceptables.
+        this.status = "borrowed";
     }
 
     returnUnit(newCondition) {
-        try {
-            if (this.status != "borrowed") throw "error"; // El estado no es borrowed.
-            if (newCondition) this.condition = newCondition; // Actualiza la condición si esta se pasa por parámetro.
-        } catch (e) {
-            throw new Error(`Unit ${this.unitId} is not borrowed (Status: ${this.status})`);
-        }
-
-        this.status = this.isConditionGoodOrFair() ? "available" : "maintenance"; // El estado pasa a available si la condición es buena (good o fair). En caso contrario, pasa a maintenance.
+        if (this.status !== "borrowed") throw new Error(`Unit ${this.unitId} is not borrowed (Status: ${this.status})`); // El estado no es borrowed.
+        if (newCondition) this.condition = newCondition; // Actualiza la condición si esta se pasa por parámetro.
+        
+        this._updateStatusByCondition();
     }
 
     maintenanceUnit(newCondition) {
-        try {
-            if (this.status != "maintenance") throw "error"; // El estado no es maintenance.
-            if (newCondition) this.condition = newCondition; // Actualiza la condición si esta se pasa por parámetro.
-        } catch (e) {
-            throw new Error(`Unit ${this.unitId} is not in maintenance`);
-        }
-
-        this.status = this.isConditionGoodOrFair() ? "available" : "maintenance"; // El estado pasa a available si la condición es buena (good o fair). En caso contrario, pasa a maintenance.
+        if (this.status !== "maintenance") throw new Error(`Unit ${this.unitId} is not in maintenance`); // El estado no es maintenance.
+        if (newCondition) this.condition = newCondition; // Actualiza la condición si esta se pasa por parámetro.
+        
+        this._updateStatusByCondition();
     }
 
     updateConditionAndStatus(newCondition) {
         if (newCondition) this.condition = newCondition; // Actualiza la condición si esta se pasa por parámetro. Por defecto, la nueva condición serà nula.
         
-        this.status = this.isConditionGoodOrFair() ? "available" : "maintenance"; // El estado pasa a available si la condición es buena (good o fair). En caso contrario, pasa a maintenance.
+        this._updateStatusByCondition();
     }
 
     info() {
@@ -320,7 +346,7 @@ export class User {
     }
 
     info() {
-        let activeYN = this.active ? "Yes" : "No" // Transformar el valor booleano a string para el return.
+        const activeYN = this.active ? "Yes" : "No" // Transformar el valor booleano a string para el return.
         return `Id user: ${this.idUser}. Name: ${this.name}. Active: ${activeYN}`;
     }
 }
@@ -340,7 +366,7 @@ export class Loan {
     }
 
     returnLoan(newCondition) {
-        if (this.returned) throw new Error(`BookUnit ${this.bookUnit.unitId} is not available for loan.`); // Ya está devuelto.
+        if (this.returned) throw new Error(`Loan ${this.idLoan} already returned.`); // Ya está devuelto.
 
         this.bookUnit.returnUnit(newCondition);
         this.returnDate = new Date(); // Establece la fecha de devolución a la fecha actual.
@@ -358,7 +384,149 @@ export class Loan {
 // EXERCISE 4
 // --------------------------------------------------------------------------------
 export class Library {
+    constructor() {
+        this.books = [];
+        this.users = [];
+        this.loans = [];
+    }
 
+    /** 
+     * Busca un objeto dentro de una colección por su id.
+     * Esta función protegida general nos permite evitar utilizar el mismo código en muchos sitios, ya que se puede reutilizar para buscar un objeto por su id.
+     * 
+     * @param {Object[]} collection Colección a la cual pertenece el objeto y sobre la cual iterar.
+     * @param {*} id Valor que identifica el objeto.
+     * @param {string} field Campo sobre el cual buscar.
+     * @returns {Object|undefined} Objeto relacionado con el id del field correspondiente o undefined si no lo encuentra.
+    */
+    _findById(collection, id, field) {
+        const n = collection.length;
+        for (let i = 0; i < n; i++) {
+            if (collection[i][field] === id) return collection[i];
+        }
+        return undefined
+    }
+
+    /** 
+     * Elimina un objeto dentro de una colección por su id.
+     * Esta función protegida general nos permite evitar utilizar el mismo código en muchos sitios, ya que se puede reutilizar para eliminar un objeto por su id.
+     * 
+     * @param {Object[]} collection Colección a la cual pertenece el objeto y sobre la cual iterar.
+     * @param {*} id Valor que identifica el objeto.
+     * @param {string} field Campo sobre el cual buscar.
+     * @returns {Object|undefined} Objeto eliminado relacionado con el id del field correspondiente o undefined si no lo encuentra.
+    */
+    _removeById(collection, id, field) {
+        const n = collection.length;
+        for (let i = 0; i < n; i++) {
+            if (collection[i][field] === id) {
+                const removed = collection[i]; // Nos guardamos temporalmente el removed como un auxiliar para retornarlo.
+                collection.splice(i, 1); // Eliminamos solo 1 elemento del array (el de la posición i).
+                return removed;
+            }
+        }
+        return undefined;
+    }
+
+    /** 
+     * Verifica que exista el value; si no, hace un throw del error pasado por parámetro.
+     * Esta función protegida general nos permite evitar utilizar el mismo código en muchos sitios, ya que se puede reutilizar para gestionar los throws de errores.
+     * 
+     * @param {*} value Valor a comprobar.
+     * @param {string} message Mensaje de error a usar en el throw new Error().
+     * @returns {*} El valor (si existe).
+     * @throws {Error} Si value es null o undefined.
+    */
+    _require(value, message) {
+        if (!value) throw new Error(message);
+        return value;
+    }
+
+    /* Books */
+    addBook(id, title, author) {
+        if (this.getBook(id)) throw new Error(`Book with id ${id} already exists`);
+
+        const book = new Book(id, title, author);
+        this.books.push(book);
+        return book;
+    }
+
+    getBook(id) {
+        return this._findById(this.books, id, "id");
+    }
+
+    listBooks() {
+        return this.books.map(b => b.info());
+    }
+
+    /* Users */
+    addUser(idUser, newName) {
+        if (this.getUser(idUser)) throw new Error(`User with id ${idUser} already exists`);
+
+        const user = new User(idUser, newName);
+        this.users.push(user);
+        return user;
+    }
+
+    getUser(idUser) {
+        return this._findById(this.users, idUser, "idUser");
+    }
+
+    updateUser(idUser, newName) {
+        const user = this._require(this.getUser(idUser), "User not found");
+        user.updateName(newName);
+        return user;
+    }
+
+    // Si no existe el usuario, lanza el mensaje de error, ya que _require recibirá undefined; si existe, lo elimina y devuelve el user (utilizado como auxiliar en _removeById).
+    removeUser(idUser) {
+        return this._require(this._removeById(this.users, idUser, "idUser"), "User not found");
+    }
+
+    listUsers() {
+        return this.users.map(u => u.info());
+    }
+
+    /* Loans */
+    createLoan(idLoan, idUser, bookId) {
+        const user = this._require(this.getUser(idUser), "User not found");
+        const book = this._require(this.getBook(bookId), "Book not found");
+
+        // Si no existe la availableUnit, lanza el mensaje de error, ya que _require recibirá undefined; si existe, lo devuelve con el this.units[i] de getAvailableUnit.
+        const availableBook = this._require(book.getAvailableUnit(), "No available units for this book");
+
+        const loan = new Loan(idLoan, user, availableBook);
+        this.loans.push(loan);
+        return loan;
+    }
+
+    returnLoan(idLoan, newCondition) {
+        // Si no existe el loan, lanza el mensaje de error, ya que _require recibirá undefined; si existe, lo devuelve con el collection[i] de _findById.
+        const loan = this._require(this._findById(this.loans, idLoan, "idLoan"), "Loan not found");
+
+        if (loan.returned) throw new Error("Loan already returned");
+
+        loan.returnLoan(newCondition);
+        return loan;
+    }   
+
+    // Si no existe el loan, lanza el mensaje de error, ya que _require recibirá undefined; si existe, lo elimina y devuelve el loan (utilizado como auxiliar en _removeById).
+    removeLoan(idLoan) {
+        return this._require(this._removeById(this.loans, idLoan, "idLoan"), "Loan not found");
+    }
+
+    listLoans(activeOnly = false) {
+        if (!activeOnly) return this.loans; // Deveuelve todos los loans por el parámetro false.
+
+        const n = this.loans.length;
+        const res = [];
+        // Lo hacemos con un bucle y pusheamos a un array los loans dentro del array loans que están activos.
+        for (let i = 0; i < n; i++) {
+            if (!this.loans[i].returned) res.push(this.loans[i]);
+        }
+
+        return res;
+    }
 }
 
 // --------------------------------------------------------------------------------
@@ -369,36 +537,36 @@ export function Movie(title, duration) {
     this.title = title;
     this.duration = duration;
 
-    /* Variables públicas */ //No ponemos el '#' delante porque, aunque sean propiedades privadas, estamos dentro de una función constructora.
+    /* Variables privadas */ // No ponemos el '#' delante porque, aunque sean propiedades privadas, estamos dentro de una función constructora.
     let actors = [];
     let ratings = [];
 
-    /* Métodos privilegiados */
+    /* Métodos Privilegiados (con el ; al final) */
     this.addActor = function(actor) {
         if (typeof actor !== "string" || actor.trim() === "") throw new Error("Invalid actor name");
         actors.push(actor);
-    }
+    };
 
     this.getActors = function() {
         return actors.slice();
-    }
+    };
 
     this.addRating = function(rating) {
         if (typeof rating !== "number" || rating < 1 || rating > 5) throw new Error("The rating must be a number between 1 and 5");
         ratings.push(rating);
-    }
+    };
 
     this.getAverageRating = function() {
-        let n = ratings.length;
+        const n = ratings.length;
         if (n === 0) return 0;
 
         let sum = 0;
         for (let i = 0; i < n; i++) sum += ratings[i];
 
         return sum / n;
-    }
+    };
 
-    /* Métodos en el Prototipo */
+    /* Métodos en el Prototipo (sin el ; al final) */
     Movie.prototype.getInfo = function() {
         return {
             title: this.title,
