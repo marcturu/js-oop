@@ -7,7 +7,7 @@
  * @param {Object} options Objeto con las propiedades opcionales: uppercase, lowercase, numbers, symbols.
  * @returns {string} Contraseña generada.
 */
-export function generatePassword(options) {
+export function generatePassword(options = {}) {
 
     // El parámetro options debe ser un objeto válido (no null).
     if (typeof options !== "object" || options === null) throw new Error("Options must be an object"); // Se utiliza comparación !== y === en vez de != y ==.
@@ -28,9 +28,10 @@ export function generatePassword(options) {
         const key = keys[i]; //La "palabra" de counts.
         const value = counts[key]; //El valor obtenido a través de la palabra.
 
-        if (typeof value !== "number" || value < 0) throw new Error(`${key.charAt(0).toUpperCase() + key.slice(1)} count must be a non-negative number`); //Passar el primer carácter de uppercase a mayúscula
+        if (typeof value !== "number" || value < 0 || !Number.isInteger(value)) {
+            throw new Error(`${key.charAt(0).toUpperCase() + key.slice(1)} count must be a non-negative number`); //Passar el primer carácter de uppercase a mayúscula
+        }
     }
-
     // La longitud debe estar entre 4 y 128 caracteres.
     const propertiesLength = counts.uppercase + counts.lowercase + counts.numbers + counts.symbols;
     
@@ -59,7 +60,7 @@ export function generatePassword(options) {
     }
 
     let password = randomTypeFormer(upper, counts.uppercase) + randomTypeFormer(lower, counts.lowercase) +
-                   randomTypeFormer(nums, counts.numbers) + randomTypeFormer(sym, counts.symbols)
+                   randomTypeFormer(nums, counts.numbers) + randomTypeFormer(sym, counts.symbols);
 
     // Dividir el "password" formado en carácteres individuales.
     let array = password.split("");
@@ -115,7 +116,7 @@ export function generateSpiral(n) {
 
     // Garantiza el separador de " " entre vueltas.
     function isValidStep(row, column, prevRow, prevColumn) {
-        if (!inBounds(row, column) || matrix[row][column] !== " ") return false; // Fuera del tablero o ya hay un "█" dibujado..
+        if (!inBounds(row, column) || matrix[row][column] !== " ") return false; // Fuera del tablero o ya hay un "█" dibujado.
 
         const neighbors = [ [row - 1, column], [row + 1, column], [row, column - 1], [row, column + 1] ]; // Básicamente, los vecinos de la celda (row, column). Las diagonales, no.
 
@@ -170,7 +171,7 @@ export class LibraryItem {
     }
 
     info() {
-        return `Id: ${this.id}. Title: ${this.title}`;
+        return `Id: ${this.id}. Title: ${this.title}.`;
     }
 }
 
@@ -210,55 +211,73 @@ export class Book extends LibraryItem {
         return this.units.length;
     }
 
-    // Se podría hacer con .filter.
+    // Se ha implementado con .filter y //bucle.
     get availableUnits() {
+        return this.units.filter(u => u.status === "available").length;
+
+        /* Manera de hacerlo con bucle:*/ /*
         let num = 0;
         const n = this.units.length;
         for (let i = 0; i < n; i++) {
             if (this.units[i].status === "available") num++;
         }
-        return num;
+        return num; */
     }
 
-    // Se podría hacer con .filter.
+    // Se ha implementado con .filter y //bucle.
     get borrowedUnits() {
+        return this.units.filter(u => u.status === "borrowed").length;
+
+        /* Manera de hacerlo con bucle:*/ /*
         let num = 0;
         const n = this.units.length;
         for (let i = 0; i < n; i++) {
             if (this.units[i].status === "borrowed") num++;
         }
-        return num;
+        return num; */
     }
 
-    // Se podría hacer con .filter.
+    // Se ha implementado con .filter y //bucle.
     get maintenanceUnits() {
+        return this.units.filter(u => u.status === "maintenance").length;
+
+        /* Manera de hacerlo con bucle:*/ /*
         let num = 0;
         const n = this.units.length;
         for (let i = 0; i < n; i++) {
             if (this.units[i].status === "maintenance") num++;
         }
-        return num;
+        return num; */
     }
 
+    // Se ha implementado con .find y //bucle.
     getAvailableUnit() {
+        return this.units.find(u => u.status === "available"); // Si no encuentra, devuélve undefined automáticamente.
+
+        /* Manera de hacerlo con bucle:*/ /*
         const n = this.units.length;
         for(let i = 0; i < n; i++) {
             if (this.units[i].status === "available") return this.units[i]; // Devuelve la primera copia disponible.
         }
-        return undefined; //No hay ninguna copia con status "available".
+        return undefined; //No hay ninguna copia con status "available". */
     }
 
-    // Se podría hacer con .filter.
+    // Se ha implementado con .find y //bucle.
     getUnitById(unitId) {
+        return this.units.find(u => u.unitId === unitId); // Si no encuentra, devuélve undefined automáticamente.
+
+        /* Manera de hacerlo con bucle:*/ /*
         const n = this.units.length;
         for(let i = 0; i < n; i++) {
             if (this.units[i].unitId === unitId) return this.units[i];
         }
-        return undefined; //No hay ninguna copia con la unitId pasada por parámetro.
+        return undefined; //No hay ninguna copia con la unitId pasada por parámetro. */
     }
 
+    // .call: Llamamos a .info de la clase padre (LibraryItem). De esta manera, reutilizamos la lógica de la clase abstracta y añadimos la información específica de Book.
     info() {
-        return `Id: ${this.id}. Title: ${this.title}. Author: ${this.author}. Units: ${this.availableUnits}/${this.totalUnits} available.`
+        const base = LibraryItem.prototype.info.call(this);
+        return `${base} Author: ${this.author}. Units: ${this.availableUnits}/${this.totalUnits} available.`
     }
 
 }
@@ -374,7 +393,7 @@ export class Loan {
     }
 
     info() {
-        let returnedYN = this.returned ? "Yes" : "No" // Transformar el valor booleano a string para el return.
+        const returnedYN = this.returned ? "Yes" : "No" // Transformar el valor booleano a string para el return.
         return `LoanId: ${this.idLoan}, User: ${this.user.name}, BookUnit: ${this.bookUnit.unitId}, Returned: ${returnedYN}`;
     }
   
@@ -400,6 +419,7 @@ export class Library {
      * @returns {Object|undefined} Objeto relacionado con el id del field correspondiente o undefined si no lo encuentra.
     */
     _findById(collection, id, field) {
+        //return collection.find(item => item[field] === id); // Lo he hecho de la otra manera porque no sabía si era complicarme demasiado ya.
         const n = collection.length;
         for (let i = 0; i < n; i++) {
             if (collection[i][field] === id) return collection[i];
@@ -483,8 +503,11 @@ export class Library {
         return this._require(this._removeById(this.users, idUser, "idUser"), "User not found");
     }
 
+    // .bind: Con .bind podemos fijar el contexto de la instancia dentro de la función después de cambiar el valor de this en el callback de map()
     listUsers() {
-        return this.users.map(u => u.info());
+        return this.users.map(function(u) {
+            return u.info();
+        }.bind(this));
     }
 
     /* Loans */
@@ -547,8 +570,9 @@ export function Movie(title, duration) {
         actors.push(actor);
     };
 
+    // .apply: Como actors es una variable privada a la que no se puede acceder, devolvemos una copia pasandole el array de actors como lista de argumentos en el apply.
     this.getActors = function() {
-        return actors.slice();
+        return [].slice.apply(actors);
     };
 
     this.addRating = function(rating) {
