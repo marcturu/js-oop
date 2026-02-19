@@ -47,6 +47,8 @@ Ten en cuenta que los tests son condiciones que deben cumplir las funciones que 
 
 ### Preparando el entorno
 
+Una vez hecho **clone** del repositorio, debes instalar las dependencias del proyecto.
+
 ```
 npm install
 ```
