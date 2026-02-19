@@ -47,6 +47,8 @@ Tingues en compte que els tests són condicions que han de complir les funcions 
 
 ### Preparant l'entorn
 
+Un cop fet **clone** del repositori, has d'instal·lar les dependències del projecte.
+
 ```
 npm install
 ```
