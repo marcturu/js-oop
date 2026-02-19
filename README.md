@@ -50,6 +50,7 @@ npm install
 ```bash
 npm t
 ```
+The test environment includes a menu (accessible by pressing the `w` key) that allows you to run tests selectively. For example, pressing `a` lets you manually re-run all tests, and pressing `f` lets you re-run only the tests that have failed.
 
 The test runner will watch for changes in `src/pec2/pec2.js` and re-run automatically on every save.
 
