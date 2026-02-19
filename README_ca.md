@@ -4,9 +4,8 @@ En aquesta PAC practicarem la programació amb JavaScript per mitjà d'exercicis
 
 ## Competències
 
-En aquesta PAC es desenvolupen les següents competències del Màster:
+En aquesta PAC es desenvolupen les següents competències:
 
-* [CB10] Que els estudiants tinguin les habilitats d'aprenentatge que els permetin continuar estudiant d'una manera que haurà de ser en gran mesura autodirigida o autònoma.
 * [CG1] Analitzar i sintetitzar informació tècnica complexa.
 * [CE3] Utilitzar de manera adequada els llenguatges de programació i les millors eines de desenvolupament per a l'anàlisi, el disseny i la implementació de llocs i aplicacions web en funció de les necessitats del projecte.
 * [CE8] Adaptar-se a les tecnologies web i als futurs entorns actualitzant les competències professionals.
@@ -18,13 +17,7 @@ Els objectius concrets d'aquesta PAC són:
 * Aprendre a utilitzar JavaScript i les seves característiques bàsiques.
 * Contribuir a conèixer a fons el llenguatge JavaScript per poder fer-lo servir en el desenvolupament d'aplicacions Web.
 
-## Lliurament de la PAC
-
-Un cop hagis realitzat les activitats pràctiques proposades en aquest enunciat, el lliurament es farà enviant els teus canvis a l'apartat de l'aula virtual de la UOC.
-
 ## Puntuació
-
-El fet de treballar amb tests per verificar la funcionalitat del codi et permetrà tenir una idea de la teva nota abans del lliurament.
 
 La puntuació dels exercicis pràctics es basa en dos criteris: **Funcionalitat** i **Implementació**. S'espera que els exercicis funcionin correctament (passin els tests) i que la implementació (el codi) tingui una qualitat adequada.
 
@@ -40,8 +33,8 @@ Alguns detalls a tenir en compte:
 ## Requisits mínims
 
 - Tenir instal·lat Visual Studio Code (o qualsevol altre IDE).
-- Estudi de la introducció i repàs a JavaScript (Activitat 1 del Repte 2).
-- Estudi de conceptes de JavaScript (Activitat 2 del Repte 2).
+- Estudi de la introducció i repàs a JavaScript.
+- Estudi de conceptes de JavaScript.
 
 ## Exercicis pràctics (10 punts)
 
