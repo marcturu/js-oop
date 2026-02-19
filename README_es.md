@@ -59,7 +59,7 @@ npm t
 
 La instrucción anterior lanzará los tests cada vez que guardes el fichero `src/pec2/pec2.js`, que es precisamente donde implementarás los ejercicios de esta PEC.
 
-Tal y como te indicamos en la PEC 1, la primera vez que ejecutes `npm t` y se lancen los tests, muy posiblemente fallarán todos, ya que no hay ningún ejercicio implementado. Conforme vayas trabajando en los ejercicios y guardes el fichero, puede que algún test lance algún error. Revisa el mensaje de error que se imprime para conocer su formato y entender cómo se notifican los errores.
+La primera vez que ejecutes `npm t` y se lancen los tests, muy posiblemente fallarán todos, ya que no hay ningún ejercicio implementado. Conforme vayas trabajando en los ejercicios y guardes el fichero, puede que algún test lance algún error. Revisa el mensaje de error que se imprime para conocer su formato y entender cómo se notifican los errores.
 
 ### Ejercicio 1 (1,5 puntos)
 
