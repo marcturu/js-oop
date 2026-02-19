@@ -59,7 +59,7 @@ npm t
 
 La instrucció anterior llançarà els tests cada cop que desis el fitxer `src/pec2/pec2.js`, que és precisament on implementaràs els exercicis d'aquesta PAC.
 
-Tal com t'indiquem a la PAC 1, la primera vegada que executis `npm t` i es llencin els tests, molt possiblement fallaran tots, ja que no hi ha cap exercici implementat. Conformi vagis treballant en els exercicis i guardis el fitxer, pot ser que algun test llanci algun error. Revisa el missatge d'error que s'imprimeix per conèixer el format i entendre com es notifiquen els errors.
+La primera vegada que executis `npm t` i es llencin els tests, molt possiblement fallaran tots, ja que no hi ha cap exercici implementat. Conformi vagis treballant en els exercicis i guardis el fitxer, pot ser que algun test llanci algun error. Revisa el missatge d'error que s'imprimeix per conèixer el format i entendre com es notifiquen els errors.
 
 ### Exercici 1 (1,5 punts)
 
