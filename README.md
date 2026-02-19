@@ -73,6 +73,9 @@ src/
 
 ## 📷 Screenshots 
 
+### Tests passed:
+![TestsPassed](screenshots/Tests_passed.jpg)
+
 ---
 
 ## ⚖️ Copyright & License
