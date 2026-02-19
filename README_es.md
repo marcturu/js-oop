@@ -4,9 +4,8 @@ En esta PEC vamos a practicar la programación con JavaScript por medio de ejerc
 
 ## Competencias
 
-En esta PEC se desarrollan las siguientes competencias del Máster:
+En esta PEC se desarrollan las siguientes competencias:
 
-* [CB10] Que los estudiantes posean las habilidades de aprendizaje que les permitan continuar estudiando de una manera que tendrá que ser en gran medida autodirigida o autónoma.
 * [CG1] Analizar y sintetizar información técnica compleja.
 * [CE3] Utilizar de manera adecuada los lenguajes de programación y las mejores herramientas de desarrollo para el análisis, el diseño y la implementación de lugares y aplicaciones web en función de las necesidades del proyecto.
 * [CE8] Adaptarse a las tecnologías web y a los futuros entornos actualizando las competencias profesionales.
@@ -18,13 +17,7 @@ Los objetivos concretos de esta PEC son:
 * Aprender a utilizar JavaScript y sus características básicas.
 * Contribuir a conocer a fondo el lenguaje JavaScript para poder usarlo en el desarrollo de aplicaciones Web.
 
-## Entrega de la PEC
-
-Una vez hayas realizado las actividades prácticas propuestas en este enunciado, la entrega se realizará enviando tus cambios al apartado del aula virtual de la UOC.
-
 ## Puntuación
-
-El hecho de trabajar con tests para verificar la funcionalidad del código te permitirá tener una idea de tu propia nota antes de la entrega.
 
 La puntuación de los ejercicios prácticos se basa en dos criterios: **Funcionalidad** e **Implementación**. Se espera que los ejercicios funcionen correctamente (pasen los tests) y que la implementación (el código) tenga una calidad adecuada. 
 
@@ -40,8 +33,8 @@ Algunos detalles a tener en cuenta:
 ## Requisitos mínimos
 
 - Tener instalado Visual Studio Code (o cualquier otro IDE).
-- Estudio de la introducción y repaso a JavaScript (Actividad 1 del Reto 2).
-- Estudio de la conceptos de JavaScript (Actividad 2 del Reto 2).
+- Estudio de la introducción y repaso a JavaScript.
+- Estudio de la conceptos de JavaScript.
 
 ## Ejercicios prácticos (10 puntos)
 
@@ -67,8 +60,6 @@ npm t
 La instrucción anterior lanzará los tests cada vez que guardes el fichero `src/pec2/pec2.js`, que es precisamente donde implementarás los ejercicios de esta PEC.
 
 Tal y como te indicamos en la PEC 1, la primera vez que ejecutes `npm t` y se lancen los tests, muy posiblemente fallarán todos, ya que no hay ningún ejercicio implementado. Conforme vayas trabajando en los ejercicios y guardes el fichero, puede que algún test lance algún error. Revisa el mensaje de error que se imprime para conocer su formato y entender cómo se notifican los errores.
-
-Si tienes algún problema con los tests, no dudes en preguntar en el foro "Dudas PEC 2 | Dubtes PAC 2" del aula.
 
 ### Ejercicio 1 (1,5 puntos)
 
