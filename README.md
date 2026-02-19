@@ -55,7 +55,7 @@ The test environment includes a menu (accessible by pressing the `w` key) that a
 The test runner will watch for changes in `src/pec2/pec2.js` and re-run automatically on every save.
 
 ### 4. Check the statements
-Take a look at the statements in `README_ca.md` or `README_es.md` to understand the exercise implemented in `src/pec2/pec2.js`.
+Take a look at the statements in `README_ca.md` or `README_es.md` to understand the exercises implemented in `src/pec2/pec2.js`.
 
 ---
 
