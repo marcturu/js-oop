@@ -76,12 +76,3 @@ src/
 
 ### Tests passed:
 ![TestsPassed](screenshots/Tests_passed.jpg)
-
----
-
-## ⚖️ Copyright & License
-
-© 2025 Marc Turu Roca. All rights reserved.
-
-This project and its contents are the exclusive intellectual property of Marc Turu Roca.  
-All rights reserved. No part of this project may be copied, modified, distributed, or used without prior written permission from the author.
