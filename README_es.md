@@ -26,7 +26,7 @@ Algunos detalles a tener en cuenta:
 - Se penalizará cualquier intento de _hardcodear_ los tests para forzar que pasen. Esta técnica consiste en cambiar la implementación para que devuelva únicamente el valor esperado por el test (cualquier otro test fallaría).
 - Los tests automáticos están diseñados para detectar ejercicios erróneos o incompletos para casos concretos. El hecho de que un test pase no garantiza que el ejercicio esté realizado correctamente, es decir, que cubra todos los casos.
 - Un ejercicio cuyos tests no pasan se puntuará con un 0 salvo que existan problemas con el test.
-- Además de pasar los tests, el profesorado evaluará vuestro código en base a los siguientes criterios:
+- Además de pasar los tests, se evaluará el código en base a los siguientes criterios:
   - Legibilidad, sencillez y calidad del código.
   - Conocimientos de programación. Por ejemplo, no utilizar las estructuras de control adecuadas, como utilizar un bucle para construir una sentencia condicional o viceversa.
 
