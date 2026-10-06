@@ -1,4 +1,4 @@
-# 💻 JS OOP — Algorithms & data structures in JavaScript
+# 💻 JS OOP — Algorithms, data structures & OOP in JavaScript 
 
 <sub>🗓️ Developed in November 2025</sub>
 
