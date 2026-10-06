@@ -26,7 +26,7 @@ Alguns detalls a tenir en compte:
 - Es penalitzarà qualsevol intent de _hardcodejar_ els tests per forçar que passin. Aquesta tècnica consisteix a canviar la implementació perquè retorni únicament el valor esperat pel test (qualsevol altre test fallaria).
 - Els tests automàtics estan dissenyats per detectar exercicis erronis o incomplets per a casos concrets. El fet que un test passi no garanteix que l'exercici sigui correcte, és a dir, que cobreixi tots els casos.
 - Un exercici els tests del qual no passen es puntuarà amb un 0 llevat que hi hagi problemes amb el test.
-- A més de passar els tests, el professorat avaluarà el vostre codi en base als següents criteris:
+- A més de passar els tests, s'avaluarà el codi en base als següents criteris:
   - Llegibilitat, senzillesa i qualitat del codi.
   - Coneixements de programació. Per exemple, no utilitzar les estructures de control adequades, com ara utilitzar un bucle per construir una sentència condicional o viceversa.
 
